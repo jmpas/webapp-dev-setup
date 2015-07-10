@@ -3,7 +3,7 @@
 var ContactModel = require( './contact.model.js' );
 
 exports.get = function ( req, res ) {
-  res.status( 200 ).json( [
+  res.status( 200 ).json([
     {
       name: 'Jonas'
     }, {
@@ -11,7 +11,7 @@ exports.get = function ( req, res ) {
     }, {
       name: 'Jonathan'
     }
-  ] );
+  ]);
 };
 
 exports.post = function ( req, res ) {
