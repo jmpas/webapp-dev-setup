@@ -1,34 +1,45 @@
+'use strict';
+
 var gulp = require( 'gulp' );
-var p = require('gulp-load-plugins')(); // loading gulp plugins lazily
-var spawn = require('child_process').spawn;
-var node = null;
+var uglify = require( 'gulp-uglify' );
+var minifyCSS = require( 'gulp-minify-css' );
+var concat = require( 'gulp-concat' );
+var inject = require( 'gulp-inject' );
+var minifyHTML = require( 'gulp-minify-html' );
+var nodemon = require( 'gulp-nodemon' );
+var path = require( 'path' );
+var fs = require( 'fs' );
+var jasmine = require( 'gulp-jasmine' );
 
-
-gulp.task( 'spawn', function () {
-  
-  if ( node ) {
-    node.kill();
-  }
-  
-  node = spawn( 'node', [ 'server.js' ], { stdio:'inherit' } );
-  node.on( 'close', function ( code ) {
-    if ( code === 8 ) {
-      p.util.log( 'Error! Wating for changes' );
-    }
-  } );
-
-} );
-
-gulp.task( 'livereload-start', function () {
-  return p.livereload.listen();
-} );
-
-gulp.task( 'watch-server', ['livereload-start'], function () {
+gulp.task( 'backend', function () {
   return gulp
-    .watch([ 'server.js','backend/**/*.js' ], [ 'spawn' ])
-    .on( 'change', function ( file ) {
-      p.livereload.changed( file.path );
-    } );
+    .src(['./backend/**/*', '!backend/**/*.spec.js'])
+    .pipe(gulp.dest('./dist/backend'));
 } );
 
-gulp.task( 'serve', [ 'spawn', 'watch-server'], function () {} );
+
+gulp.task( 'build', [ 'backend' ], function () {} );
+
+gulp.task( 'test:backend', function (done) {
+  gulp
+    .src( './backend/tests/**/*.js' )
+    .pipe( jasmine() );
+} );
+
+gulp.task( 'test', [ 'test:backend' ], function () {} );
+
+gulp.task( 'serve', function () {
+  nodemon({
+    script: 'backend/app.js',
+    ext: 'js html',
+    env: { 'NODE_ENV': 'development' }
+  });
+} );
+
+gulp.task( 'serve:dist', [ 'build' ], function () {
+  nodemon({
+    script: 'dist/backend/app.js',
+    ext: 'js html',
+    env: { 'NODE_ENV': 'development' }
+  });
+} );

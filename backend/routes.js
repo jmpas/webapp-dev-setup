@@ -1,22 +1,17 @@
 'use strict';
 
 var path = require( 'path' );
-var fs = require( 'fs' );
+var config = require( './config' );
+var middleware = require( './middleware' );
 
 module.exports = function ( app ) {
-  fs.readdir( ( __dirname + '/modules' ), function ( err, folders ) {
-    var i, n, file;
 
-    if ( err ) {
-      return;
-    }
+  //app.use( '/api/*', middleware.auth );
+  app.use( '/api/contact', require( './api/contact' ) );
 
-    for ( i = 0, n = folders.length; i < n; i++ ) {
-      var folder = folders[i];
-    
-      require( path.resolve( __dirname + '/modules/' + folder ) )( app );
-    }
-      
-    require( path.resolve( __dirname + '/index.js' ) )( app );
-  });
+  app.route( '/*' )
+    .get( function ( req, res ) {
+      res.sendFile( path.resolve( app.get( 'appPath' ) + req.url + '.html' ) );
+    } );
+
 };
