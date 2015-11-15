@@ -9,24 +9,38 @@ var minifyHTML = require( 'gulp-minify-html' );
 var nodemon = require( 'gulp-nodemon' );
 var path = require( 'path' );
 var fs = require( 'fs' );
-var jasmine = require( 'gulp-jasmine' );
+var mocha = require( 'gulp-mocha' );
+var istanbul = require( 'gulp-istanbul' );
 
-gulp.task( 'backend', function () {
+gulp.task( 'build:backend', function () {
   return gulp
-    .src(['./backend/**/*', '!backend/**/*.spec.js'])
-    .pipe(gulp.dest('./dist/backend'));
-} );
+    .src([ './backend/api/**/*', '!backend/api/**/*.spec.js' ])
+    .pipe( gulp.dest( './dist/backend' ) );
+});
 
+gulp.task( 'build', [ 'build:backend' ], function () {});
 
-gulp.task( 'build', [ 'backend' ], function () {} );
+/**
+ * Run backend tests
+ */
+gulp.task( 'pre-test:backend', function () {
+  return gulp.src([ 'backend/api/**/*.model.js', 'backend/api/**/*.controller.js', '!backend/api/**/*.spec.js' ])
+    // Covering files
+    .pipe( istanbul() )
+    // Force `require` to return covered files
+    .pipe( istanbul.hookRequire() );
+});
 
-gulp.task( 'test:backend', function (done) {
-  gulp
-    .src( './backend/tests/**/*.js' )
-    .pipe( jasmine() );
-} );
+gulp.task( 'test:backend', [ 'pre-test:backend' ], function () {
+  return gulp.src([ 'backend/api/**/*.spec.js' ])
+    .pipe( mocha({ reporter: 'nyan' }) )
+    // Creating the reports after tests ran
+    .pipe( istanbul.writeReports() )
+    // Enforce a coverage value
+    .pipe( istanbul.enforceThresholds({ thresholds: { global: 100 } }) );
+});
 
-gulp.task( 'test', [ 'test:backend' ], function () {} );
+gulp.task( 'test', [ 'test:backend' ], function () {});
 
 gulp.task( 'serve', function () {
   nodemon({
@@ -34,7 +48,7 @@ gulp.task( 'serve', function () {
     ext: 'js html',
     env: { 'NODE_ENV': 'development' }
   });
-} );
+});
 
 gulp.task( 'serve:dist', [ 'build' ], function () {
   nodemon({
@@ -42,4 +56,4 @@ gulp.task( 'serve:dist', [ 'build' ], function () {
     ext: 'js html',
     env: { 'NODE_ENV': 'development' }
   });
-} );
+});

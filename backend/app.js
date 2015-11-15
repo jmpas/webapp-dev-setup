@@ -41,4 +41,4 @@ require( './routes' )( app );
 
 app.listen( app.get( 'port' ), function () {
 	console.log( 'Server running: http://' + config.host + ':' + app.get( 'port' ) + '/' );
-} );
+});

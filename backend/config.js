@@ -1,7 +1,6 @@
 var config = null;
 var path = require( 'path' );
 
-console.log( 'config', process.env.NODE_ENV );
 switch ( process.env.NODE_ENV ) {
   case 'development':
     config = {
