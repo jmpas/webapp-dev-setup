@@ -11,6 +11,7 @@ var path = require( 'path' );
 var fs = require( 'fs' );
 var mocha = require( 'gulp-mocha' );
 var istanbul = require( 'gulp-istanbul' );
+var env = require('gulp-env');
 
 gulp.task( 'build:backend', function () {
   return gulp
@@ -23,6 +24,15 @@ gulp.task( 'build', [ 'build:backend' ], function () {});
 /**
  * Run backend tests
  */
+
+gulp.task( 'env:test', function () {
+  env({
+    vars: {
+      NODE_ENV: 'test'
+    }
+  });
+});
+
 gulp.task( 'pre-test:backend', function () {
   return gulp.src([ 'backend/api/**/*.model.js', 'backend/api/**/*.controller.js', '!backend/api/**/*.spec.js' ])
     // Covering files
@@ -31,7 +41,7 @@ gulp.task( 'pre-test:backend', function () {
     .pipe( istanbul.hookRequire() );
 });
 
-gulp.task( 'test:backend', [ 'pre-test:backend' ], function () {
+gulp.task( 'test:backend', [ 'pre-test:backend', 'env:test' ], function () {
   return gulp.src([ 'backend/api/**/*.spec.js' ])
     .pipe( mocha({ reporter: 'nyan' }) )
     // Creating the reports after tests ran

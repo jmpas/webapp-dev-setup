@@ -14,6 +14,8 @@
     "es6-shim": "^0.31.2",
     "express": "^4.12.4",
     "express-session": "^1.11.2",
+    "lodash": "^3.10.1",
+    "mongoose": "^4.2.5",
     "parse-link-header": "^0.2.0",
     "request": "^2.57.0"
   },
@@ -22,8 +24,10 @@
   },
   "devDependencies": {
     "chai": "^3.4.1",
+    "chai-as-promised": "^5.1.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.5.2",
+    "gulp-env": "^0.2.0",
     "gulp-inject": "^1.2.0",
     "gulp-istanbul": "^0.10.2",
     "gulp-minify-css": "^1.1.1",
