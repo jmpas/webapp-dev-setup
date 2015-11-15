@@ -5,12 +5,15 @@ var session = require( 'express-session' );
 var bodyParser = require( 'body-parser' );
 var app = express();
 var path = require( 'path' );
+var config = require( './config' );
+var db = require( path.join( config.root, 'backend/db' ) );
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var config = require( './config' );
-
 app.set('port', (process.env.PORT || 9000));
+
+// Connect to database
+db.connect( config.mongo.uri, config.mongo.options );
 
 switch ( process.env.NODE_ENV ) {
   case 'development':
@@ -28,7 +31,7 @@ app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: true }) );
 
 app.use(
-  session({ 
+  session({
     secret: 'safe-secret',
     resave: false,
     saveUninitialized: true,

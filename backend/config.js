@@ -21,7 +21,10 @@ switch ( process.env.NODE_ENV ) {
     config = {
       root: path.normalize( __dirname + '/../' ),
       host: '0.0.0.0',
-      port: '9000'
+      port: '9000',
+      mongo: {
+        uri: 'mongodb://localhost/myApp'
+      }
     };
     break;
   case 'production':
@@ -37,15 +40,18 @@ switch ( process.env.NODE_ENV ) {
       host: '0.0.0.0',
       port: '9000',
       mongo: {
-        uri: 'mongodb://0.0.0.0/test-db'
+        uri: 'mongodb://localhost/test-db'
       }
     }
     break;
   default:
     config = {
       root: path.normalize( __dirname + '/../' ),
-      host: 'localhost',
-      port: '9000'
+      host: '0.0.0.0',
+      port: '9000',
+      mongo: {
+        uri: 'mongodb://localhost/myApp'
+      }
     };
     break;
 }

@@ -3,10 +3,14 @@
 var mongoose = require( 'mongoose' );
 
 function connect ( uri, options ) {
+
+  if ( mongoose.connection.readyState ) return;
+
   mongoose.connect( uri, options );
+
   mongoose.connection.on( 'error', function ( err ) {
-    console.error( 'MongoDB connection error: ' + err );
-    process.exit( -1 );
+  	console.error( 'MongoDB connection error: ' + err );
+  	process.exit( -1 );
   });
 }
 

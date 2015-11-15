@@ -9,24 +9,35 @@ var db = require( path.join( config.root, 'backend/db' ) );
 var expect = require( 'chai' ).expect;
 var Contact = require( './contact.model' );
 
-// Connect to database
-db.connect( config.mongo.uri, config.mongo.options );
-
 describe( 'Connection', function () {
-  var tobi = new Contact({ name: 'tobi' }), 
-      loki = new Contact({ name: 'loki' }), 
-      jane = new Contact({ name: 'jane' });
+  var tobi,
+      loki,
+      jane;
 
   beforeEach( function ( done ) {
+    // Connect to database
+    db.connect( config.mongo.uri, config.mongo.options );
+
     Contact.remove( {}, function ( err ) {
+
       if ( err ) return done( err );
-      
+
+      tobi = new Contact({ name: 'tobi' }),
+      loki = new Contact({ name: 'loki' }),
+      jane = new Contact({ name: 'jane' });
+
       Contact.create( [ tobi, loki, jane ], done );
     });
+
   });
 
-  afterEach( function () {
-    db.closeConnection();
+  afterEach( function ( done ) {
+    Contact.remove( {}, function ( err ) {
+      if ( err ) return done( err );
+
+      db.closeConnection();
+      done();
+    });
   });
 
   describe( '#find()', function () {
