@@ -7,7 +7,7 @@ var middleware = require( './middleware' );
 module.exports = function ( app ) {
 
   //app.use( '/api/*', middleware.auth );
-  app.use( '/api/contact', require( './api/contact' ) );
+  app.use( '/api/user', require( './api/user' ) );
 
   app.route( '/*' )
     .get( function ( req, res ) {

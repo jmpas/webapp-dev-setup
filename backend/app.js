@@ -10,7 +10,7 @@ var db = require( path.join( config.root, 'backend/db' ) );
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-app.set('port', (process.env.PORT || 9000));
+app.set( 'port', ( process.env.PORT || 9000 ) );
 
 // Connect to database
 db.connect( config.mongo.uri, config.mongo.options );
@@ -37,6 +37,8 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+app.use( db.errorMiddleware );
 
 app.use( express.static( app.get( 'appPath' ) ) );
 

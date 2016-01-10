@@ -43,7 +43,7 @@ gulp.task( 'pre-test:backend', function () {
 
 gulp.task( 'test:backend', [ 'pre-test:backend', 'env:test' ], function () {
   return gulp.src([ 'backend/api/**/*.spec.js' ])
-    .pipe( mocha({ reporter: 'nyan' }) )
+    .pipe( mocha({ reporter: 'spec' }) )
     // Creating the reports after tests ran
     .pipe( istanbul.writeReports() )
     // Enforce a coverage value

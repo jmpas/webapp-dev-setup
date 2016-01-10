@@ -7,7 +7,7 @@ var config = require( '../../config' );
 var path = require( 'path' );
 var db = require( path.join( config.root, 'backend/db' ) );
 var expect = require( 'chai' ).expect;
-var Contact = require( './contact.model' );
+var User = require( './user.model' );
 
 describe( 'Connection', function () {
   var tobi,
@@ -18,21 +18,21 @@ describe( 'Connection', function () {
     // Connect to database
     db.connect( config.mongo.uri, config.mongo.options );
 
-    Contact.remove( {}, function ( err ) {
+    User.remove( {}, function ( err ) {
 
       if ( err ) return done( err );
 
-      tobi = new Contact({ name: 'tobi' }),
-      loki = new Contact({ name: 'loki' }),
-      jane = new Contact({ name: 'jane' });
+      tobi = new User({ name: 'tobi' }),
+      loki = new User({ name: 'loki' }),
+      jane = new User({ name: 'jane' });
 
-      Contact.create( [ tobi, loki, jane ], done );
+      User.create( [ tobi, loki, jane ], done );
     });
 
   });
 
   afterEach( function ( done ) {
-    Contact.remove( {}, function ( err ) {
+    User.remove( {}, function ( err ) {
       if ( err ) return done( err );
 
       db.closeConnection();
@@ -44,7 +44,7 @@ describe( 'Connection', function () {
 
     it( 'respond with matching records', function ( done ) {
 
-      Contact.findOne({ name: 'tobi' }, function ( err, doc ) {
+      User.findOne({ name: 'tobi' }, function ( err, doc ) {
         expect( err ).to.not.exist;
         expect( doc ).to.have.property( 'name' ).equal( tobi.name );
 
