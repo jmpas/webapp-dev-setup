@@ -2,16 +2,16 @@
 
 var gulp = require( 'gulp' );
 var uglify = require( 'gulp-uglify' );
-var minifyCSS = require( 'gulp-minify-css' );
+var cssnano = require( 'gulp-cssnano' );
 var concat = require( 'gulp-concat' );
 var inject = require( 'gulp-inject' );
-var minifyHTML = require( 'gulp-minify-html' );
+var htmlmin = require( 'gulp-htmlmin' );
 var nodemon = require( 'gulp-nodemon' );
 var path = require( 'path' );
 var fs = require( 'fs' );
 var mocha = require( 'gulp-mocha' );
 var istanbul = require( 'gulp-istanbul' );
-var env = require('gulp-env');
+var env = require( 'gulp-env' );
 
 gulp.task( 'build:backend', function () {
   return gulp
