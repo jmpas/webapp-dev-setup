@@ -62,7 +62,8 @@ describe( 'ROUTE /api/user', function () {
 
     beforeEach( function () {
       userMock = {
-        name: 'admin'
+        username: 'admin',
+        password: 'secret'
       };
     })
 
@@ -75,7 +76,7 @@ describe( 'ROUTE /api/user', function () {
         .end(function ( err, res ){
           if ( err ) return done( err );
 
-          expect( res.body ).to.have.property( 'name' ).and.to.eql( userMock.name );
+          expect( res.body ).to.have.property( 'username' ).and.to.eql( userMock.username );
 
           done();
         });
@@ -84,7 +85,7 @@ describe( 'ROUTE /api/user', function () {
     it( 'should respond 500 code with error', function ( done ) {
       request( app )
         .post( '/api/user' )
-        .send({ name: '1234' })
+        .send({ username: '1234', password: '1234' })
         .expect( 500 )
         .expect( 'Content-Type', /json/ )
         .end(function ( err, res ){

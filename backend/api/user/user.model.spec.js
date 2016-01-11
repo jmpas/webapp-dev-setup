@@ -22,9 +22,13 @@ describe( 'Connection', function () {
 
       if ( err ) return done( err );
 
-      tobi = new User({ name: 'tobi' }),
-      loki = new User({ name: 'loki' }),
-      jane = new User({ name: 'jane' });
+      tobi = new User({ username: 'tobi', password: 'secret' }),
+      loki = new User({ username: 'loki', password: 'secret' }),
+      jane = new User({ username: 'jane', password: 'secret' });
+
+      tobi.password = User.generatePassword( tobi.password );
+      loki.password = User.generatePassword( loki.password );
+      jane.password = User.generatePassword( jane.password );
 
       User.create( [ tobi, loki, jane ], done );
     });
@@ -44,13 +48,34 @@ describe( 'Connection', function () {
 
     it( 'respond with matching records', function ( done ) {
 
-      User.findOne({ name: 'tobi' }, function ( err, doc ) {
+      User.findOne({ username: 'tobi' }, function ( err, doc ) {
         expect( err ).to.not.exist;
-        expect( doc ).to.have.property( 'name' ).equal( tobi.name );
+        expect( doc ).to.have.property( 'username' ).equal( tobi.username );
+        expect( doc ).to.have.property( 'password' ).equal( tobi.password );
 
         done();
       });
 
+    });
+
+  });
+
+  describe( 'checkPassword', function () {
+
+    it( 'should return false', function () {
+      expect( tobi.checkPassword( 'myfalsesecret' ) );
+    });
+
+    it( 'should return true', function () {
+      expect( tobi.checkPassword( 'secret' ) );
+    });
+
+  });
+
+  describe( 'generatePassword', function () {
+
+    it( 'should encrypt password to sha1', function () {
+      expect( User.generatePassword( 'secret' ) ).to.equal( 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4' );
     });
 
   });

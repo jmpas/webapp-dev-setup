@@ -9,7 +9,11 @@ exports.find = function ( req, res ) {
 };
 
 exports.create = function ( req, res ) {
-  var newUser = new User( req.body );
+  var newUser = req.body;
+
+  newUser.password = User.generatePassword( newUser.password );
+  newUser = new User( newUser );
+
   newUser
     .save()
     .then( function  ( doc ) {

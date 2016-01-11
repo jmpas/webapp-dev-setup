@@ -17,13 +17,18 @@ db.connect( config.mongo.uri, config.mongo.options );
 
 switch ( process.env.NODE_ENV ) {
   case 'development':
+    app.set( 'view engine', 'jade' );
     app.set( 'appPath', path.join( config.root, '/frontend' ) );
+    app.set( 'views', app.get( 'appPath' ) );
     break;
   case 'production':
-    app.set( 'appPath', path.join( config.root, '/frontend' ) );
+    app.set( 'appPath', path.join( config.root, '/build' ) );
+    app.set( 'views', app.get( 'appPath' ) );
     break;
   default:
+    app.set( 'view engine', 'jade' );
     app.set( 'appPath', path.join( config.root, '/frontend' ) );
+    app.set( 'views', app.get( 'appPath' ) );
     break;
 }
 
@@ -35,12 +40,14 @@ app.use(
     secret: 'safe-secret',
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      maxAge: 3600000,
+      secure: false
+    }
   })
 );
 
 app.use( db.errorMiddleware );
-
-app.use( express.static( app.get( 'appPath' ) ) );
 
 require( './routes' )( app );
 
