@@ -4,7 +4,7 @@ var mongoose = require( 'mongoose' );
 
 var Schema = mongoose.Schema;
 
-var ContactSchema = new Schema({
+var UserSchema = new Schema({
   name: {
     type: String,
     validate: {
@@ -16,4 +16,4 @@ var ContactSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model( 'User', ContactSchema );
+module.exports = mongoose.model( 'User', UserSchema );
