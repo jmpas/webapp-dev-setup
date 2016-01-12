@@ -3,6 +3,7 @@
 var express = require( 'express' );
 var session = require( 'express-session' );
 var bodyParser = require( 'body-parser' );
+var favicon = require( 'serve-favicon' );
 var app = express();
 var path = require( 'path' );
 var config = require( './config' );
@@ -32,6 +33,7 @@ switch ( process.env.NODE_ENV ) {
     break;
 }
 
+app.use( favicon( app.get( 'appPath' ) + '/favicon.ico' ) );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: true }) );
 

@@ -14,7 +14,8 @@
     "express": "^4.12.4",
     "express-session": "^1.12.1",
     "lodash": "^3.10.1",
-    "mongoose": "^4.3.5"
+    "mongoose": "^4.3.5",
+    "serve-favicon": "^2.3.0"
   },
   "engines": {
     "node": "0.12.7"
