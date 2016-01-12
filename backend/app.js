@@ -20,20 +20,18 @@ switch ( process.env.NODE_ENV ) {
   case 'development':
     app.set( 'view engine', 'jade' );
     app.set( 'appPath', path.join( config.root, '/frontend' ) );
-    app.set( 'views', app.get( 'appPath' ) );
     break;
   case 'production':
     app.set( 'appPath', path.join( config.root, '/build' ) );
-    app.set( 'views', app.get( 'appPath' ) );
     break;
   default:
     app.set( 'view engine', 'jade' );
     app.set( 'appPath', path.join( config.root, '/frontend' ) );
-    app.set( 'views', app.get( 'appPath' ) );
     break;
 }
 
 app.use( favicon( app.get( 'appPath' ) + '/favicon.ico' ) );
+app.set( 'views', app.get( 'appPath' ) );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: true }) );
 
@@ -51,6 +49,7 @@ app.use(
 
 app.use( db.errorMiddleware );
 
+app.use( express.static( app.get( 'appPath' ) ) );
 require( './routes' )( app );
 
 app.listen( app.get( 'port' ), function () {
