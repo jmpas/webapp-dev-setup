@@ -1,21 +1,16 @@
 'use sctrict';
 
-var express = require( 'express' ),
-    bodyParser = require( 'body-parser' ),
-    config = require( '../../config' ),
+var config = require( '../../config' ),
     path = require( 'path' );
 
 var expect = require( 'chai').expect,
     request = require('supertest'),
     mongoose = require( 'mongoose' );
 
-var app = express(),
-    db = require( path.join( config.root, 'backend/db' ) )
-    User = require( './user.model' );
 
-app.use( bodyParser.json() );
-app.use( bodyParser.urlencoded({ extended: true }) );
-app.use( db.errorMiddleware );
+var app = require( path.resolve( config.root, 'backend/test/mocks/app' ) ),
+    User = require( path.join( config.root, 'backend/api/user/user.model' ) ),
+    db = require( path.join( config.root, 'backend/db' ) );
 
 app.use( '/api/user', require( './index' ) );
 

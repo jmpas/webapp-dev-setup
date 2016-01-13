@@ -1,33 +1,14 @@
 'use sctrict';
 
-var express = require( 'express' ),
-    bodyParser = require( 'body-parser' ),
-    session = require( 'express-session' ),
-    config = require( '../../config' ),
+var expect = require( 'chai').expect,
+    request = require('supertest');
+
+var config = require( '../../config' ),
     path = require( 'path' );
 
-var expect = require( 'chai').expect,
-    request = require('supertest'),
-    mongoose = require( 'mongoose' );
-
-var app = express(),
-    db = require( path.join( config.root, 'backend/db' ) )
-    User = require( '../user/user.model' );
-
-app.use( bodyParser.json() );
-app.use( bodyParser.urlencoded({ extended: true }) );
-app.use(
-  session({
-    secret: 'safe-secret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 3600000,
-      secure: false
-    }
-  })
-);
-app.use( db.errorMiddleware );
+var app = require( path.resolve( config.root, 'backend/test/mocks/app' ) ),
+    User = require( path.join( config.root, 'backend/api/user/user.model' ) ),
+    db = require( path.join( config.root, 'backend/db' ) );
 
 app.use( '/api/login', require( './index' ) );
 
