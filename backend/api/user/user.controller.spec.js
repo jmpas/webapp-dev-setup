@@ -60,7 +60,7 @@ describe( 'ROUTE /api/user', function () {
         username: 'admin',
         password: 'secret'
       };
-    })
+    });
 
     it( 'should create an user', function ( done ) {
       request( app )

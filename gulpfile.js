@@ -1,14 +1,7 @@
 'use strict';
 
 var gulp = require( 'gulp' );
-var uglify = require( 'gulp-uglify' );
-var cssnano = require( 'gulp-cssnano' );
-var concat = require( 'gulp-concat' );
-var inject = require( 'gulp-inject' );
-var htmlmin = require( 'gulp-htmlmin' );
 var nodemon = require( 'gulp-nodemon' );
-var path = require( 'path' );
-var fs = require( 'fs' );
 var mocha = require( 'gulp-mocha' );
 var istanbul = require( 'gulp-istanbul' );
 var env = require( 'gulp-env' );

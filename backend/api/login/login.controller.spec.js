@@ -23,7 +23,7 @@ describe( 'ROUTE /api/login', function () {
     User.remove( {}, function ( err ) {
       if ( err ) return done( err );
 
-      tobi = new User({ username: 'tobi', password: 'secret' }),
+      var tobi = new User({ username: 'tobi', password: 'secret' });
       tobi.password = User.generatePassword( tobi.password );
 
       tobi.save()
