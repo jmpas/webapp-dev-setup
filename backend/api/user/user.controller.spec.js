@@ -3,8 +3,8 @@
 var config = require( '../../config' ),
     path = require( 'path' );
 
-var expect = require( 'chai').expect,
-    request = require('supertest'),
+var expect = require( 'chai' ).expect,
+    request = require( 'supertest' ),
     mongoose = require( 'mongoose' );
 
 

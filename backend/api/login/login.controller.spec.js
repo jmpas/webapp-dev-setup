@@ -1,7 +1,7 @@
 'use sctrict';
 
 var expect = require( 'chai').expect,
-    request = require('supertest');
+    request = require( 'supertest' );
 
 var config = require( '../../config' ),
     path = require( 'path' );

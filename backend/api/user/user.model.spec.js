@@ -22,8 +22,8 @@ describe( 'Connection', function () {
 
       if ( err ) return done( err );
 
-      tobi = new User({ username: 'tobi', password: 'secret' }),
-      loki = new User({ username: 'loki', password: 'secret' }),
+      tobi = new User({ username: 'tobi', password: 'secret' });
+      loki = new User({ username: 'loki', password: 'secret' });
       jane = new User({ username: 'jane', password: 'secret' });
 
       tobi.password = User.generatePassword( tobi.password );
