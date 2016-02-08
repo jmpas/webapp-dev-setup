@@ -46,7 +46,7 @@ describe( 'Connection', function () {
 
   describe( '#find()', function () {
 
-    it( 'respond with matching records', function ( done ) {
+    it( 'should respond with matching records', function ( done ) {
 
       User.findOne({ username: 'tobi' }, function ( err, doc ) {
         expect( err ).to.not.exist;
