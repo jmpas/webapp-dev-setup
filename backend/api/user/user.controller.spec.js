@@ -8,7 +8,7 @@ var expect = require( 'chai' ).expect,
     mongoose = require( 'mongoose' );
 
 
-var app = require( path.resolve( config.root, 'backend/test/mocks/app' ) ),
+var app = require( path.resolve( config.root, 'backend/test/mocks/app' ) )(),
     User = require( path.join( config.root, 'backend/api/user/user.model' ) ),
     db = require( path.join( config.root, 'backend/db' ) );
 

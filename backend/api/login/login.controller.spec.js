@@ -6,7 +6,7 @@ var expect = require( 'chai').expect,
 var config = require( '../../config' ),
     path = require( 'path' );
 
-var app = require( path.resolve( config.root, 'backend/test/mocks/app' ) ),
+var app = require( path.resolve( config.root, 'backend/test/mocks/app' ) )(),
     User = require( path.join( config.root, 'backend/api/user/user.model' ) ),
     db = require( path.join( config.root, 'backend/db' ) );
 
