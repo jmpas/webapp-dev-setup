@@ -6,14 +6,6 @@ var mocha = require( 'gulp-mocha' );
 var istanbul = require( 'gulp-istanbul' );
 var env = require( 'gulp-env' );
 
-gulp.task( 'build:backend', function () {
-  return gulp
-    .src([ './backend/api/**/*', '!backend/api/**/*.spec.js' ])
-    .pipe( gulp.dest( './dist/backend' ) );
-});
-
-gulp.task( 'build', [ 'build:backend' ], function () {});
-
 /**
  * Run backend tests
  */
@@ -55,8 +47,8 @@ gulp.task( 'serve', function () {
 
 gulp.task( 'serve:dist', [ 'build' ], function () {
   nodemon({
-    script: 'dist/backend/app.js',
+    script: 'backend/app.js',
     ext: 'js html',
-    env: { 'NODE_ENV': 'development' }
+    env: { 'NODE_ENV': 'production' }
   });
 });
